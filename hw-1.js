@@ -5,6 +5,7 @@ const folders = [
       files: [
         { id: 17, name: 'profil.jpg' },
         { id: 18, name: 'manzara.jpg'},
+        { id: 8, name: 'landscape.jpg'},
       ],
     },
     {
@@ -19,6 +20,14 @@ const folders = [
       id: 7,
       name: 'Klasör 3',
     },
+    {
+      id: 10,
+      name: 'Klasör 4',
+      files: [
+        { id: 44, name: 'foto2.png' },
+        { id: 46, name: 'dosya2.xls' },
+      ],
+    }
   ]
 
 
@@ -31,15 +40,29 @@ function move(targetfileId, targetFolderId) {
 
     for(const folder of folders){
        const {id, name, files} = folder //destruction
-       if(files) { //dosyalar varsa dolanacak
+       if(files) { //dosyalar varsa dolanacak  
         targetFile = (files.find( file => file.id === targetfileId))
-        break; 
+        if(targetFile) {//dosyaya ulaştıysak
+          break;
+        }
        }
     }
+
+   
 
     //hedef klasöre ulaşma
     targetFolder = folders.find(folder => folder.id === targetFolderId)
     
+    //Error handles
+    if(!targetFile) {
+      console.log(targetFile)
+      console.log("Dosya bulunamadı")
+      return false
+    }
+    if(!targetFolder){
+      console.log("Klasör bulunamadı")
+      return false
+    }
     
     //ilgili dosyayı klasöre taşıma
     targetFolder.files.push(targetFile)
@@ -47,7 +70,7 @@ function move(targetfileId, targetFolderId) {
   
     //@todo - dosya silenecek eski yerinden
 
-    console.log("taşıma işlemi başarılı")
+    console.log("Taşıma işlemi başarılı")
 }
 
 
@@ -63,12 +86,24 @@ function copy (targetfileId, targetFolderId) {
      const {id, name, files} = folder //destruction
      if(files) { //dosyalar varsa dolanacak
       targetFile = (files.find( file => file.id === targetfileId))
-      break; 
+      if(targetFile) {//dosyaya ulaştıysak
+        break;
+      }
      }
   }
 
   //hedef klasöre ulaşma
   targetFolder = folders.find(folder => folder.id === targetFolderId)
+
+  //Error handles
+  if(!targetFile) {
+    console.log("Dosya bulunamadı")
+    return false
+  }
+  if(!targetFolder){
+    console.log("Klasör bulunamadı")
+    return false
+  }
 
   //@todo - üstteki logic move ve copy de aynı ondan bunları başka bir func içerisine alabilirim.
 
@@ -84,7 +119,7 @@ function copy (targetfileId, targetFolderId) {
    //ilgili dosyayı klasöre taşıma
    targetFolder.files.push(CopiedTargetFile)
 
-   console.log("kopyalama işlemi başarılı")
+   console.log("Kopyalama işlemi başarılı")
 
 }
 
@@ -99,18 +134,26 @@ function remove(targetfileId) {
     if(files) { //dosyalar varsa dolanacak
      targetFolder = folder; //geçiçi olarak atadık break ifadesi ile çıkılırsa target folder en son folder yani hedef olmuş olur
      targetFile = (files.find( file => file.id === targetfileId))
-     break; 
+     console.log(targetFile)
+     if(targetFile) {//dosyaya ulaştıysak
+      break;
+    } 
     }
-
-   
  }
+
+  //Error handles
+  if(!targetFile) {
+    console.log("Silinecek dosya bulunamadı")
+    return false
+  }
+ 
 
  // dosya silme işlemi
  //https://stackoverflow.com/questions/15287865/remove-array-element-based-on-object-property?answertab=active#tab-top
   const index = targetFolder.files.findIndex(prop => prop.id === targetFile.id);
   targetFolder.files.splice(index,1);
   //console.log(targetFolder.files)
-
+  
   console.log("silme işlemi başarılı")
 }
 
@@ -118,9 +161,14 @@ function remove(targetfileId) {
 function removeFolder(targetFolderId) {
  
   const index = folders.findIndex(prop => prop.id === targetFolderId);
-  folders.splice(index,1);
-
-  console.log("klasör silme işlemi başarılı")
+  
+  if(index === -1 ){
+    console.log("Silinecek klasör mevcut değil")
+  }else {
+    folders.splice(index,1);
+    console.log("Klasör silme işlemi başarılı")
+  }
+  
 }
 
 function parentFolderOf(targetfileId) {
@@ -130,18 +178,28 @@ function parentFolderOf(targetfileId) {
   let targetFolder = null;
 
   // hedef dosyaya ulaşma
-
+  console.log(targetfileId)
   for(const folder of folders){
-     const {id, name, files} = folder //destruction
+     const {files} = folder //destruction
      if(files) { //dosyalar varsa dolanacak
       targetFolder = folder;
-      targetFile = (files.find( file => file.id === targetfileId))
-      break; 
+      targetFile = (files.find( file => file.id === targetfileId)) 
+      console.log(targetFile);
+      if(targetFile) {//dosyaya ulaştıysak //ensona gidiyor handle et!
+        break;
+      } 
      }
   }
 
+  if(!targetFile) {
+    console.log("Dosya bulunamadı")
+    return false
+  }
+
   if(targetFolder) {
-    console.log(`Parent Folder Of ${targetFile.name} : ${targetFolder.id}`)
+    console.log(`Parent Folder Of  : ${targetFolder.id}`) //handle etmemiz gerekli
+  } else {
+    console.log(`Parent folder is not found`)
   }
 
 
@@ -150,23 +208,28 @@ function parentFolderOf(targetfileId) {
 
 
 
-// move(17,6)
-// console.log(folders[1].files) 
+//  move(46,5)
+//  console.log(folders[0].files) 
+//  console.log(folders[3].files) 
 
-copy(18,5) // kopyasını oluşturacak
-console.log(folders[0]);
+  // copy(8,10) // kopyasını oluşturacak
+  // console.log(folders[0].files) 
+  // console.log(folders[3].files) 
 
-// folders[0].files[1].name = "deneme.jpg"
-// console.log(folders[0].files) //başarılı 
+  // folders[3].files[2].name = "asd.jpg"
+  // console.log(folders[0].files) //başarılı 
+  // console.log(folders[3].files) 
 
-// remove(17) // dosyayı silecek 
-// //başarılı
+//  remove(21) // dosyayı silecek 
+//  console.log(folders[1].files) 
+// // //başarılı
 
 
-// removeFolder(6) //klasörü ve altındaki tüm dosyaları silecek
+//  removeFolder(10) //klasörü ve altındaki tüm dosyaları silecek
+//  console.log(folders)
 //başarılı
-// parentFolderOf(17) // ==> 5
-//başarılı
+ //parentFolderOf(12) // ==> 5
+ //başarılı
  
 //   move(17,6) // dosyayı klasöre taşıyacak
 //   copy(18,7) // kopyasını oluşturacak

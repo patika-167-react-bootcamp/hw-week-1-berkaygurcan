@@ -7,8 +7,7 @@ Array.prototype.includesCi = function (targetItem) {
     let resultStr = "";
 
     for(item of strList) {
-        if(item.trim().toLowerCase() === targetItem.trim().toLowerCase()) {
-            // console.log(`İstenen değer : ${item}`);
+        if(item.trim().toLowerCase() === targetItem.trim().toLowerCase()) { //trim ile ekstra sağ ve soldaki boşluklardan da kurtulmak istedim
             resultStr = item;
             break;
         }
