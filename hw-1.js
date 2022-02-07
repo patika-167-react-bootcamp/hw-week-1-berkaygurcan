@@ -77,7 +77,7 @@ function copy (targetfileId, targetFolderId) {
   //öncelikle aynı referans değişkeni olmamaları gerekli ondan ilgili satırın referans bağını kesmemiz gerekli.
  
   CopiedTargetFile = { //yeni obje oluşturarak referans bağını kırabiliriz.
-    id: 1,
+    id: Math.floor(Math.random() * 1000), // 0-1000 arasında bir id üretiyoruz
     name: targetFile.name
    }
 
@@ -101,6 +101,8 @@ function remove(targetfileId) {
      targetFile = (files.find( file => file.id === targetfileId))
      break; 
     }
+
+   
  }
 
  // dosya silme işlemi
@@ -108,6 +110,8 @@ function remove(targetfileId) {
   const index = targetFolder.files.findIndex(prop => prop.id === targetFile.id);
   targetFolder.files.splice(index,1);
   //console.log(targetFolder.files)
+
+  console.log("silme işlemi başarılı")
 }
 
 // klasör silme işlemi
@@ -116,6 +120,7 @@ function removeFolder(targetFolderId) {
   const index = folders.findIndex(prop => prop.id === targetFolderId);
   folders.splice(index,1);
 
+  console.log("klasör silme işlemi başarılı")
 }
 
 function parentFolderOf(targetfileId) {
@@ -148,7 +153,8 @@ function parentFolderOf(targetfileId) {
 // move(17,6)
 // console.log(folders[1].files) 
 
-// copy(18,5) // kopyasını oluşturacak
+copy(18,5) // kopyasını oluşturacak
+console.log(folders[0]);
 
 // folders[0].files[1].name = "deneme.jpg"
 // console.log(folders[0].files) //başarılı 
@@ -159,7 +165,8 @@ function parentFolderOf(targetfileId) {
 
 // removeFolder(6) //klasörü ve altındaki tüm dosyaları silecek
 //başarılı
-parentFolderOf(17) // ==> 5
+// parentFolderOf(17) // ==> 5
+//başarılı
  
 //   move(17,6) // dosyayı klasöre taşıyacak
 //   copy(18,7) // kopyasını oluşturacak
