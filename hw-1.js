@@ -43,15 +43,21 @@ function move(targetfileId, targetFolderId) {
     
     //ilgili dosyayı klasöre taşıma
     targetFolder.files.push(targetFile)
-    console.log(targetFolder)
-    
-    //Hedef klasöre dosyayı ekledikden sonra ana folders objesinde bunu güncellememiz gerekiyor
-    
-    
-    
+  
+  
+    //@todo - dosya silenecek eski yerinden
+
+    console.log("taşıma işlemi başarılı")
 }
 
-move(17,6)
+function copy (targetfileId, targetFolderId) {
+  
+}
+
+
+
+// move(17,6)
+// console.log(folders[1].files) 
 
 
   
