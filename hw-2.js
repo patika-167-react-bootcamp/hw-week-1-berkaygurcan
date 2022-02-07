@@ -2,7 +2,7 @@
 
 strList = ["Berkay", "uTku", "FuaT", "berat", "iLHAn", "batuhan"];
 
-Array.prototype.includesCi = function includesCi(targetItem) {
+Array.prototype.includesCi = function (targetItem) {
 
     let resultStr = "";
 
