@@ -97,17 +97,49 @@ function remove(targetfileId) {
   for(const folder of folders){
     const {id, name, files} = folder //destruction
     if(files) { //dosyalar varsa dolanacak
-     targetFolder = folder; //geçiçi olarak atadık break ifadesi ile çıkılırsa tarfet folder en son folder yani hedef olmuş olur
+     targetFolder = folder; //geçiçi olarak atadık break ifadesi ile çıkılırsa target folder en son folder yani hedef olmuş olur
      targetFile = (files.find( file => file.id === targetfileId))
      break; 
     }
  }
 
- //dosya silme işlemi
+ // dosya silme işlemi
  //https://stackoverflow.com/questions/15287865/remove-array-element-based-on-object-property?answertab=active#tab-top
- const index = targetFolder.files.findIndex(prop => prop.id === targetFile.id);
- targetFolder.files.splice(index,1);
- //console.log(targetFolder.files)
+  const index = targetFolder.files.findIndex(prop => prop.id === targetFile.id);
+  targetFolder.files.splice(index,1);
+  //console.log(targetFolder.files)
+}
+
+// klasör silme işlemi
+function removeFolder(targetFolderId) {
+ 
+  const index = folders.findIndex(prop => prop.id === targetFolderId);
+  folders.splice(index,1);
+
+}
+
+function parentFolderOf(targetfileId) {
+
+  //dosya arama işlemi
+  let targetFile = null;
+  let targetFolder = null;
+
+  // hedef dosyaya ulaşma
+
+  for(const folder of folders){
+     const {id, name, files} = folder //destruction
+     if(files) { //dosyalar varsa dolanacak
+      targetFolder = folder;
+      targetFile = (files.find( file => file.id === targetfileId))
+      break; 
+     }
+  }
+
+  if(targetFolder) {
+    console.log(`Parent Folder Of ${targetFile.name} : ${targetFolder.id}`)
+  }
+
+
 }
 
 
@@ -124,8 +156,11 @@ function remove(targetfileId) {
 // remove(17) // dosyayı silecek 
 // //başarılı
 
-removeFolder(6) //klasörü ve altındaki tüm dosyaları silecek
-  
+
+// removeFolder(6) //klasörü ve altındaki tüm dosyaları silecek
+//başarılı
+parentFolderOf(17) // ==> 5
+ 
 //   move(17,6) // dosyayı klasöre taşıyacak
 //   copy(18,7) // kopyasını oluşturacak
 //   remove(17) // dosyayı silecek
