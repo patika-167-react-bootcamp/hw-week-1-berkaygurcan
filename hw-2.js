@@ -3,22 +3,15 @@ strList = ["Berkay", "uTku", "FuaT", "berat", "iLHAn", "batuhan"];
 
 Array.prototype.includesCi = function (targetItem) {
 
-    let resultStr = "";
-
     for(item of strList) {
-        if(item.trim().toLowerCase() === targetItem.trim().toLowerCase()) { //trim ile ekstra sağ ve soldaki boşluklardan da kurtulmak istedim
-            resultStr = item;
-            break;
+        if(item.trim().toLowerCase() === targetItem.trim().toLowerCase()) { //trim ile ekstra sağ ve soldaki boşluklardan kurtulduk.
+            return true // ifade bulundu true döner
         }
 
     }
-    if(resultStr == "") { // eğer kayıt bulunamadıysa
-        return false;
-    } else { //kayıt mevcut ise
-        return true;
-    }
+    return false // eğer eşdeğer bir ifade bulamadıysa false döner
     
 }
 
-
-console.log(strList.includesCi("Utku"));
+console.log(strList.includesCi("UtKU"))  //true
+console.log(strList.includesCi("FuarT")) //false
