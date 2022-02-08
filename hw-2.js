@@ -10,14 +10,15 @@ Array.prototype.includesCi = function (targetItem) {
             resultStr = item;
             break;
         }
+
     }
     if(resultStr == "") { // eğer kayıt bulunamadıysa
-        return -1;
+        return false;
     } else { //kayıt mevcut ise
-        return resultStr;
+        return true;
     }
     
 }
 
-a = strList.includesCi("Utku");
-console.log(a);
+
+console.log(strList.includesCi("Utku"));
