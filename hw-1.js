@@ -188,7 +188,7 @@ function parentFolderOf(targetfileId) {
       targetFolder = folder;
       targetFile = (files.find( file => file.id === targetfileId)) 
       
-      if(targetFile) {//dosyaya ulaştıysak //ensona gidiyor handle et!
+      if(targetFile) {//dosyaya ulaştıysak 
         break;
       } 
      }
@@ -200,7 +200,7 @@ function parentFolderOf(targetfileId) {
   }
 
   if(targetFolder) {
-    console.log(`Parent Folder Of  : ${targetFolder.id}`) //handle etmemiz gerekli
+    console.log(`Parent Folder Of  : ${targetFolder.id}`) 
   } else {
     console.log(`Parent folder not found`)
   }
