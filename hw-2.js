@@ -10,7 +10,6 @@ Array.prototype.includesCi = function (targetItem) {
             resultStr = item;
             break;
         }
-       
     }
     if(resultStr == "") { // eğer kayıt bulunamadıysa
         return -1;
