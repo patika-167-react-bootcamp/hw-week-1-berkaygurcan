@@ -29,11 +29,13 @@ const folders = [
       ],
     }
   ]
+
+  //init variables
   let targetFile = null;
   let targetFolder = null;
 
 function move(targetfileId, targetFolderId) {
-    //dosya arama işlemi
+    
      targetFile = null;
      targetFolder = null;
 
@@ -57,12 +59,12 @@ function move(targetfileId, targetFolderId) {
     //Error handles
     if(!targetFile) {
       
-      console.log("Dosya bulunamadı")
+      console.log("File not found")
       return false
     }
     
     if(!targetFolder){
-      console.log("Klasör bulunamadı")
+      console.log("Folder not found")
       return false
     }
    
@@ -70,26 +72,24 @@ function move(targetfileId, targetFolderId) {
     targetFolder.files.push(targetFile)
   
   
-    //@todo - dosya silenecek eski yerinden
+    //dosya eski klasörden silinmeli
     const index = oldFolder.files.findIndex(prop => prop.id === targetFile.id);
     oldFolder.files.splice(index,1);
     
-    console.log("Taşıma işlemi başarılı")
+    console.log("Move operation completed successfully")
 
     
 }
 
 
 function copy (targetfileId, targetFolderId) {
-
-  //dosya arama işlemi
-  let targetFile = null;
-  let targetFolder = null;
+   targetFile = null;
+   targetFolder = null;
 
   // hedef dosyaya ulaşma
 
   for(const folder of folders){
-     const {id, name, files} = folder //destruction
+     const {files} = folder //destruction
      if(files) { //dosyalar varsa dolanacak
       targetFile = (files.find( file => file.id === targetfileId))
       if(targetFile) {//dosyaya ulaştıysak
@@ -103,11 +103,11 @@ function copy (targetfileId, targetFolderId) {
 
   //Error handles
   if(!targetFile) {
-    console.log("Dosya bulunamadı")
+    console.log("File not found")
     return false
   }
   if(!targetFolder){
-    console.log("Klasör bulunamadı")
+    console.log("Folder not found")
     return false
   }
 
@@ -123,14 +123,14 @@ function copy (targetfileId, targetFolderId) {
    //ilgili dosyayı klasöre taşıma
    targetFolder.files.push(CopiedTargetFile)
 
-   console.log("Kopyalama işlemi başarılı")
+   console.log("Copy operation completed successfully")
 
 }
 
 function remove(targetfileId) {
-   //dosya arama işlemi
-   let targetFile = null;
-   let targetFolder = null;
+   
+    targetFile = null;
+    targetFolder = null;
 
   // hedef dosyaya ulaşma
   for(const folder of folders){
@@ -147,7 +147,7 @@ function remove(targetfileId) {
 
   //Error handles
   if(!targetFile) {
-    console.log("Silinecek dosya bulunamadı")
+    console.log("The file to be deleted was not found")
     return false
   }
  
@@ -158,7 +158,7 @@ function remove(targetfileId) {
   targetFolder.files.splice(index,1);
 
   
-  console.log("silme işlemi başarılı")
+  console.log("Deletion operation completed successfully")
 }
 
 // klasör silme işlemi
@@ -167,22 +167,21 @@ function removeFolder(targetFolderId) {
   const index = folders.findIndex(prop => prop.id === targetFolderId);
   
   if(index === -1 ){
-    console.log("Silinecek klasör mevcut değil")
+    console.log("The folder to delete does not exist")
   }else {
     folders.splice(index,1);
-    console.log("Klasör silme işlemi başarılı")
+    console.log("Folder deletion operation completed successfully")
   }
   
 }
 
 function parentFolderOf(targetfileId) {
 
-  //dosya arama işlemi
-  let targetFile = null;
-  let targetFolder = null;
+  
+   targetFile = null;
+   targetFolder = null;
 
   // hedef dosyaya ulaşma
-  
   for(const folder of folders){
      const {files} = folder //destruction
      if(files) { //dosyalar varsa dolanacak
@@ -196,51 +195,22 @@ function parentFolderOf(targetfileId) {
   }
 
   if(!targetFile) {
-    console.log("Dosya bulunamadı")
+    console.log("File not found")
     return false
   }
 
   if(targetFolder) {
     console.log(`Parent Folder Of  : ${targetFolder.id}`) //handle etmemiz gerekli
   } else {
-    console.log(`Parent folder is not found`)
+    console.log(`Parent folder not found`)
   }
 
 
 }
 
-
-  move(46,5)
-  console.log(folders[0].files) 
-  console.log(folders[3].files) 
-
-// copy(8,10) // kopyasını oluşturacak
-// console.log(folders[0].files) 
-// console.log(folders[3].files) 
-
-// folders[3].files[2].name = "asd.jpg"
-// console.log(folders[0].files) //başarılı 
-// console.log(folders[3].files) 
-
-  // remove(21) // dosyayı silecek 
-  // console.log(folders[1].files) 
-  //başarılı
-
-  
-
-
-//  removeFolder(10) //klasörü ve altındaki tüm dosyaları silecek
-//  console.log(folders)
-//başarılı
- //parentFolderOf(12) // ==> 5
- //başarılı
- 
 //   move(17,6) // dosyayı klasöre taşıyacak
 //   copy(18,7) // kopyasını oluşturacak
 //   remove(17) // dosyayı silecek
 //   removeFolder(6) //klasörü ve altındaki tüm dosyaları silecek
 //   parentFolderOf(17) // ==> 5
-console.log("\n");
-console.log("\n");
-console.log("***************************")
-console.log(folders);
+

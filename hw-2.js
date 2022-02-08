@@ -1,4 +1,3 @@
-/* `string.includes()` metodunun case insensitive versiyonunu yazmanızı bekliyoruz. */
 
 strList = ["Berkay", "uTku", "FuaT", "berat", "iLHAn", "batuhan"];
 
@@ -21,5 +20,5 @@ Array.prototype.includesCi = function (targetItem) {
     
 }
 
-a = strList.includesCi("Utku ");
+a = strList.includesCi("Utku");
 console.log(a);
