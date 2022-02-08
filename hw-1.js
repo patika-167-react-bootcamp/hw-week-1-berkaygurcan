@@ -29,48 +29,54 @@ const folders = [
       ],
     }
   ]
-
+  let targetFile = null;
+  let targetFolder = null;
 
 function move(targetfileId, targetFolderId) {
     //dosya arama işlemi
-    let targetFile = null;
-    let targetFolder = null;
+     targetFile = null;
+     targetFolder = null;
 
     // hedef dosyaya ulaşma
 
     for(const folder of folders){
-       const {id, name, files} = folder //destruction
+       const {files} = folder //destruction
        if(files) { //dosyalar varsa dolanacak  
+        oldFolder = folder //move işleminden sonra eski klasördeki kaydı silmemiz gerekiyor 
         targetFile = (files.find( file => file.id === targetfileId))
+       
         if(targetFile) {//dosyaya ulaştıysak
           break;
         }
        }
     }
 
-   
-
     //hedef klasöre ulaşma
     targetFolder = folders.find(folder => folder.id === targetFolderId)
     
     //Error handles
     if(!targetFile) {
-      console.log(targetFile)
+      
       console.log("Dosya bulunamadı")
       return false
     }
+    
     if(!targetFolder){
       console.log("Klasör bulunamadı")
       return false
     }
-    
+   
     //ilgili dosyayı klasöre taşıma
     targetFolder.files.push(targetFile)
   
   
     //@todo - dosya silenecek eski yerinden
-
+    const index = oldFolder.files.findIndex(prop => prop.id === targetFile.id);
+    oldFolder.files.splice(index,1);
+    
     console.log("Taşıma işlemi başarılı")
+
+    
 }
 
 
@@ -105,10 +111,8 @@ function copy (targetfileId, targetFolderId) {
     return false
   }
 
-  //@todo - üstteki logic move ve copy de aynı ondan bunları başka bir func içerisine alabilirim.
-
   //ilgili dosyayı klasöre kopyalama
-  //@todo yeni dosyanın idsi değişicek ve referans bağlantısını koparmamız gerekli
+  //yeni dosyanın id'si değişicek ve referans bağlantısını koparmamız gerekli
   //öncelikle aynı referans değişkeni olmamaları gerekli ondan ilgili satırın referans bağını kesmemiz gerekli.
  
   CopiedTargetFile = { //yeni obje oluşturarak referans bağını kırabiliriz.
@@ -130,14 +134,14 @@ function remove(targetfileId) {
 
   // hedef dosyaya ulaşma
   for(const folder of folders){
-    const {id, name, files} = folder //destruction
+    const {files} = folder //destruction
     if(files) { //dosyalar varsa dolanacak
      targetFolder = folder; //geçiçi olarak atadık break ifadesi ile çıkılırsa target folder en son folder yani hedef olmuş olur
      targetFile = (files.find( file => file.id === targetfileId))
-     console.log(targetFile)
+     
      if(targetFile) {//dosyaya ulaştıysak
       break;
-    } 
+      } 
     }
  }
 
@@ -152,7 +156,7 @@ function remove(targetfileId) {
  //https://stackoverflow.com/questions/15287865/remove-array-element-based-on-object-property?answertab=active#tab-top
   const index = targetFolder.files.findIndex(prop => prop.id === targetFile.id);
   targetFolder.files.splice(index,1);
-  //console.log(targetFolder.files)
+
   
   console.log("silme işlemi başarılı")
 }
@@ -178,13 +182,13 @@ function parentFolderOf(targetfileId) {
   let targetFolder = null;
 
   // hedef dosyaya ulaşma
-  console.log(targetfileId)
+  
   for(const folder of folders){
      const {files} = folder //destruction
      if(files) { //dosyalar varsa dolanacak
       targetFolder = folder;
       targetFile = (files.find( file => file.id === targetfileId)) 
-      console.log(targetFile);
+      
       if(targetFile) {//dosyaya ulaştıysak //ensona gidiyor handle et!
         break;
       } 
@@ -206,23 +210,23 @@ function parentFolderOf(targetfileId) {
 }
 
 
+  move(46,5)
+  console.log(folders[0].files) 
+  console.log(folders[3].files) 
 
+// copy(8,10) // kopyasını oluşturacak
+// console.log(folders[0].files) 
+// console.log(folders[3].files) 
 
-//  move(46,5)
-//  console.log(folders[0].files) 
-//  console.log(folders[3].files) 
+// folders[3].files[2].name = "asd.jpg"
+// console.log(folders[0].files) //başarılı 
+// console.log(folders[3].files) 
 
-  // copy(8,10) // kopyasını oluşturacak
-  // console.log(folders[0].files) 
-  // console.log(folders[3].files) 
+  // remove(21) // dosyayı silecek 
+  // console.log(folders[1].files) 
+  //başarılı
 
-  // folders[3].files[2].name = "asd.jpg"
-  // console.log(folders[0].files) //başarılı 
-  // console.log(folders[3].files) 
-
-//  remove(21) // dosyayı silecek 
-//  console.log(folders[1].files) 
-// // //başarılı
+  
 
 
 //  removeFolder(10) //klasörü ve altındaki tüm dosyaları silecek
@@ -236,3 +240,7 @@ function parentFolderOf(targetfileId) {
 //   remove(17) // dosyayı silecek
 //   removeFolder(6) //klasörü ve altındaki tüm dosyaları silecek
 //   parentFolderOf(17) // ==> 5
+console.log("\n");
+console.log("\n");
+console.log("***************************")
+console.log(folders);
