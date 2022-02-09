@@ -1,10 +1,10 @@
 
-strList = ["Berkay", "uTku", "FuaT", "berat", "iLHAn", "batuhan"];
+strList = ["berkay", "uTku", "FuaT", "berat", "iLHAn", "batuhan"];
 
 Array.prototype.includesCi = function (targetItem) {
 
     for(item of strList) {
-        if(item.trim().toLowerCase() === targetItem.trim().toLowerCase()) { //trim ile ekstra sağ ve soldaki boşluklardan kurtulduk.
+        if(typeof(item) === "string" && item.trim().toLowerCase() === targetItem.trim().toLowerCase()) { //trim ile ekstra sağ ve soldaki boşluklardan kurtulduk.
             return true // ifade bulundu true döner
         }
 
