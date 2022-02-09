@@ -69,6 +69,10 @@ function move(targetfileId, targetFolderId) {
     }
    
     //ilgili dosyayı klasöre taşıma
+    //ilk önce klasör içerisinde files var mı diye bakmamız gerekli
+    if(!targetFolder.files) { //files yoksa biz oluşturalım
+      targetFolder.files = [] //boş bir array oluşturduk 
+    }
     targetFolder.files.push(targetFile)
   
   
@@ -119,6 +123,10 @@ function copy (targetfileId, targetFolderId) {
     id: Math.floor(Math.random() * 1000), // 0-1000 arasında bir id üretiyoruz
     name: targetFile.name
    }
+
+   if(!targetFolder.files) { //files yoksa biz oluşturalım
+    targetFolder.files = [] //boş bir array oluşturduk 
+  }
 
    //ilgili dosyayı klasöre taşıma
    targetFolder.files.push(CopiedTargetFile)
@@ -208,8 +216,8 @@ function parentFolderOf(targetfileId) {
 
 }
 
-//   move(17,6) // dosyayı klasöre taşıyacak
-//   copy(18,7) // kopyasını oluşturacak
+//   move(18,7) // dosyayı klasöre taşıyacak
+//   copy(17,6) // kopyasını oluşturacak
 //   remove(17) // dosyayı silecek
 //   removeFolder(6) //klasörü ve altındaki tüm dosyaları silecek
 //   parentFolderOf(17) // ==> 5
